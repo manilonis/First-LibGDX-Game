@@ -41,6 +41,7 @@ public class Player extends Sprite{
 		fixturedef.density = 1;
 		
 		Fixture fixture = body.createFixture(fixturedef);
+		fixture.setUserData("Player");
 		
 		shape.dispose();
 	}

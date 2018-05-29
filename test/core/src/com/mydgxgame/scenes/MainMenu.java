@@ -8,6 +8,11 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.physics.box2d.Contact;
+import com.badlogic.gdx.physics.box2d.ContactImpulse;
+import com.badlogic.gdx.physics.box2d.ContactListener;
+import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.constants.GameConstants;
 import com.mygdx.game.MyGame;
@@ -18,7 +23,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 
-public class MainMenu implements Screen {
+public class MainMenu implements Screen , ContactListener {
 	
 	private MyGame game;
 	private Texture bg;
@@ -41,6 +46,8 @@ public class MainMenu implements Screen {
 		bg = new Texture("vine.jpg");
 		
 		world = new World(new Vector2(0,-9.8f),true);
+		
+		world.setContactListener(this);
 		
 		player = new Player(world,"firefighter.jpg",500,750);
 		player.setPosition(0, 0);
@@ -110,6 +117,45 @@ public class MainMenu implements Screen {
 	public void dispose() {
 		bg.dispose();
 		player.getTexture().dispose();
+		
+	}
+
+	@Override
+	public void beginContact(Contact contact) {
+		System.out.println("Contact");
+		
+		Fixture playerFix, cloudFix;
+		String fixA = (String) contact.getFixtureA().getUserData();
+		String fixB = (String) contact.getFixtureB().getUserData();
+		
+		if(fixA.equals("Player")) {
+			playerFix = contact.getFixtureA();
+			cloudFix = contact.getFixtureB();
+		}
+		else {
+			playerFix= contact.getFixtureB();
+			cloudFix = contact.getFixtureA();
+		}
+		
+		if(fixB.equals("Cloud")) System.out.println("FixB is cloud");
+		
+	}
+
+	@Override
+	public void endContact(Contact contact) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void preSolve(Contact contact, Manifold oldManifold) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void postSolve(Contact contact, ContactImpulse impulse) {
+		// TODO Auto-generated method stub
 		
 	}
 
