@@ -14,21 +14,22 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.constants.GameConstants;
 
-public class Player extends Sprite{
+
+public class Cloud extends Sprite {
 	
 	private World world;
 	private Body body;
 	
-	public Player(World w, String image, float x, float y) {
-		super(new Texture(image));
-		this.setPosition(x, y);
+	public Cloud(World w) {
+		super(new Texture("cloud.jpg"));
 		world = w;
+		this.setPosition(500, 100);
 		createBody();
 	}
 	
 	void createBody() {
 		BodyDef bodydef = new BodyDef();
-		bodydef.type = BodyDef.BodyType.DynamicBody;
+		bodydef.type = BodyDef.BodyType.StaticBody;
 		bodydef.position.set(getX() / GameConstants.ratio ,getY() / GameConstants.ratio);
 		
 		body = world.createBody(bodydef);
@@ -45,11 +46,4 @@ public class Player extends Sprite{
 		shape.dispose();
 	}
 	
-	public void updatePlayer() {
-		this.setPosition(body.getPosition().x * GameConstants.ratio, body.getPosition().y * GameConstants.ratio);
-	}
-	
-	public Body getBody() {
-		return body;
-	}
 }
