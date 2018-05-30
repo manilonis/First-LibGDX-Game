@@ -4,7 +4,6 @@
  */
 package com.mygdx.constants;
 
-
 public class GameConstants {
 	public static final int width = 1300;
 	public static final int height = 970;
