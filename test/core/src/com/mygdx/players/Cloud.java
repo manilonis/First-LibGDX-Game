@@ -14,38 +14,37 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.constants.GameConstants;
 
-
 public class Cloud extends Sprite {
-	
+
 	private World world;
 	private Body body;
-	
+
 	public Cloud(World w) {
 		super(new Texture("cloud.jpg"));
 		world = w;
 		this.setPosition(500, 100);
 		createBody();
 	}
-	
+
 	void createBody() {
 		BodyDef bodydef = new BodyDef();
 		bodydef.type = BodyDef.BodyType.StaticBody;
-		bodydef.position.set(getX() / GameConstants.ratio ,getY() / GameConstants.ratio);
-		
+		bodydef.position.set(getX() / GameConstants.ratio, getY() / GameConstants.ratio);
+
 		body = world.createBody(bodydef);
-		
+
 		PolygonShape shape = new PolygonShape();
-		shape.setAsBox((getWidth()/2f)/GameConstants.ratio, (getHeight()/2f)/GameConstants.ratio);
-		
+		shape.setAsBox((getWidth() / 2f) / GameConstants.ratio, (getHeight() / 2f) / GameConstants.ratio);
+
 		FixtureDef fixturedef = new FixtureDef();
 		fixturedef.shape = shape;
 		fixturedef.density = 1;
-		
+
 		Fixture fixture = body.createFixture(fixturedef);
 		fixture.setUserData("Cloud");
-		//fixture.setSensor(true);
-		
+		// fixture.setSensor(true);
+
 		shape.dispose();
 	}
-	
+
 }
